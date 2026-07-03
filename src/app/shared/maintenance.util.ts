@@ -31,9 +31,3 @@ export function formatDateFr(iso?: string | null): string {
   const [y, m, d] = date.split('-');
   return y && m && d ? `${d}/${m}/${y}` : iso;
 }
-export function formatDateExcel(iso?: string | null): string {
-  if (!iso) return '—';
-  const [date] = iso.split(' ');
-  const [y, m, d] = date.split('-');
-  return y && m && d ? `${m}-${d}-${y.slice(-2)}` : iso;
-}

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MaintenanceStatus } from '../../models/maintenance.models';
 import { MaintenanceDataService } from '../../services/maintenance-data.service';
 import { DonutChartComponent, DonutSlice } from '../../shared/donut-chart.component';
-import { formatDateExcel, statusColor } from '../../shared/maintenance.util';
+import { formatDateFr, statusColor } from '../../shared/maintenance.util';
 
 const MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 
@@ -40,7 +40,7 @@ export class SuiviMaintenanceComponent {
   readonly statuses: MaintenanceStatus[] = ['Terminé', 'Ce mois', 'Bientôt'];
   query = '';
   status = 'all';
-  formatDate = formatDateExcel;
+  formatDate = formatDateFr;
   color = statusColor;
   get slices(): DonutSlice[] { return this.data.statusCounts.map(item => ({ label: item.label, value: item.value, color: statusColor(item.label as MaintenanceStatus) })); }
   get filtered() { const q = this.query.toLowerCase(); return this.data.tracking.filter(item => (this.status === 'all' || item.status === this.status) && item.machine.toLowerCase().includes(q)); }
