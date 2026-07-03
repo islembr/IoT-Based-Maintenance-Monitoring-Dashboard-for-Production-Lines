@@ -15,7 +15,9 @@ function loadWorkbook() {
     error.statusCode = 503;
     throw error;
   }
-  return { workbook: XLSX.readFile(file, { cellDates: true, cellStyles: true, cellFormula: true }), file };
+  // Keep Excel dates as serial numbers. Converting them to JavaScript Date objects here
+  // applies the machine timezone and can shift calendar-only values to the previous day.
+  return { workbook: XLSX.readFile(file, { cellDates: false, cellStyles: true, cellFormula: true }), file };
 }
 
 function sheet(workbook, name) {
