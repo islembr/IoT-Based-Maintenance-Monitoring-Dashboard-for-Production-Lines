@@ -1,6 +1,6 @@
 # IoT-Based Maintenance Monitoring Dashboard for Production Lines
 
-A responsive Angular 17 dashboard that transforms the maintenance planning workbook into a clean, read-only web interface for KTR production lines.
+A responsive Angular 17 + Express dashboard that reads the maintenance workbook at runtime and exposes it as a clean, read-only web interface for KTR production lines.
 
 ## Current scope
 
@@ -18,21 +18,30 @@ The application is intentionally read-only. It does not yet include a backend, d
 ## Architecture
 
 - `src/app/models/` — typed domain interfaces
-- `src/app/data/maintenance-data.generated.ts` — generated Excel snapshot
-- `src/app/services/maintenance-data.service.ts` — read-only data-access boundary
+- `server/` — Express API and runtime `xlsx` workbook parser
+- `src/app/services/maintenance-data.service.ts` — Angular `HttpClient` API facade
 - `src/app/pages/` — standalone Angular dashboard pages
 - `src/app/shared/` — reusable charts and display utilities
 
-The service boundary is designed so the generated data source can later be replaced by an API without rewriting the dashboard components.
+Every API request reopens the workbook. The dashboard Refresh button calls all endpoints again, so saved Excel changes appear without rebuilding Angular.
 
 ## Development
 
+Place `plan de maintenance.xlsm` in `data/` (the workbook is intentionally ignored by Git), then run:
+
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 Open `http://localhost:4200`.
+
+To keep the workbook elsewhere, set `EXCEL_PATH` before starting the server:
+
+```powershell
+$env:EXCEL_PATH='D:\Downloads\plan de maintenance.xlsm'
+npm run dev
+```
 
 ## Production build
 
@@ -42,4 +51,4 @@ npm run build
 
 ## Source data
 
-The dashboard data was extracted from `plan de maintenance.xlsm`. To refresh the dashboard after workbook changes, regenerate `maintenance-data.generated.ts` and rebuild the application.
+The Express API reads `plan de maintenance.xlsm` at request time. Save changes in Excel, then select **Actualiser Excel** in the dashboard.

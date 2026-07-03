@@ -1,15 +1,1 @@
-<div class="app-shell">
-  <aside class="sidebar" [class.open]="menuOpen">
-    <div class="brand"><span class="brand-mark">MM</span><div><strong>Maintenance Monitoring</strong><small>Production Lines · Lecture seule</small></div></div>
-    <nav><button *ngFor="let tab of tabs" class="nav-item" [class.active]="active===tab.id" (click)="setActive(tab.id)"><span>{{tab.icon}}</span>{{tab.label}}</button></nav>
-    <div class="source-note"><span></span>Données issues du classeur Excel</div>
-  </aside>
-  <header class="mobile-header"><button (click)="menuOpen=!menuOpen" aria-label="Ouvrir le menu">☰</button><strong>Maintenance KTR</strong><span>Lecture seule</span></header>
-  <main class="content">
-    <ng-container [ngSwitch]="active">
-      <app-accueil *ngSwitchCase="'accueil'"/><app-kpi-chaine *ngSwitchCase="'kpi'"/><app-action-maintenance *ngSwitchCase="'actions'"/>
-      <app-suivi-maintenance *ngSwitchCase="'suivi'"/><app-plan-hebdomadaire *ngSwitchCase="'plan'"/><app-insertion-intervention *ngSwitchCase="'insertion'"/>
-      <app-nombre-interventions *ngSwitchCase="'nombre'"/><app-fabrique-service *ngSwitchCase="'fabrique'"/><app-responsabilite *ngSwitchCase="'responsabilite'"/><app-pieces-rechange *ngSwitchCase="'pieces'"/>
-    </ng-container>
-  </main>
-</div>
+<div class="app-shell"><aside class="sidebar" [class.open]="menuOpen"><div class="brand"><span class="brand-mark">MM</span><div><strong>Maintenance Monitoring</strong><small>Production Lines · Lecture seule</small></div></div><nav><button *ngFor="let tab of tabs" class="nav-item" [class.active]="active===tab.id" (click)="setActive(tab.id)"><span>{{tab.icon}}</span>{{tab.label}}</button></nav><button class="refresh-button" (click)="refresh()" [disabled]="data.loading"><span [class.spinning]="data.loading">↻</span>{{data.loading?'Actualisation…':'Actualiser Excel'}}</button><div class="api-error" *ngIf="data.error">{{data.error}}</div><div class="source-note"><span></span><div>{{data.workbookName||'Classeur Excel'}}<small *ngIf="data.lastUpdated">Mis à jour {{data.lastUpdated|date:'dd/MM/yyyy HH:mm'}}</small></div></div></aside><header class="mobile-header"><button (click)="menuOpen=!menuOpen" aria-label="Ouvrir le menu">☰</button><strong>Maintenance Monitoring</strong><button class="mobile-refresh" (click)="refresh()" [disabled]="data.loading" aria-label="Actualiser Excel">↻</button></header><main class="content"><ng-container [ngSwitch]="active"><app-accueil *ngSwitchCase="'accueil'"/><app-kpi-chaine *ngSwitchCase="'kpi'"/><app-action-maintenance *ngSwitchCase="'actions'"/><app-suivi-maintenance *ngSwitchCase="'suivi'"/><app-plan-hebdomadaire *ngSwitchCase="'plan'"/><app-insertion-intervention *ngSwitchCase="'insertion'"/><app-nombre-interventions *ngSwitchCase="'nombre'"/><app-fabrique-service *ngSwitchCase="'fabrique'"/><app-responsabilite *ngSwitchCase="'responsabilite'"/><app-pieces-rechange *ngSwitchCase="'pieces'"/></ng-container></main></div>
