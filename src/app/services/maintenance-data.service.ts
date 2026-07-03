@@ -7,6 +7,7 @@ export class MaintenanceDataService {
   private readonly data: MaintenanceDataset = MAINTENANCE_DATA;
 
   readonly tracking = this.data.tracking;
+  readonly annualPlan = this.data.annualPlan;
   readonly preventiveActions = this.data.preventiveActions;
   readonly correctiveActions = this.data.correctiveActions;
   readonly kpis = this.data.kpis;

@@ -1,6 +1,6 @@
 <div class="app-shell">
   <aside class="sidebar" [class.open]="menuOpen">
-    <div class="brand"><span class="brand-mark">JI</span><div><strong>Jardin Intelligent</strong><small>Maintenance KTR · Lecture seule</small></div></div>
+    <div class="brand"><span class="brand-mark">MM</span><div><strong>Maintenance Monitoring</strong><small>Production Lines · Lecture seule</small></div></div>
     <nav><button *ngFor="let tab of tabs" class="nav-item" [class.active]="active===tab.id" (click)="setActive(tab.id)"><span>{{tab.icon}}</span>{{tab.label}}</button></nav>
     <div class="source-note"><span></span>Données issues du classeur Excel</div>
   </aside>

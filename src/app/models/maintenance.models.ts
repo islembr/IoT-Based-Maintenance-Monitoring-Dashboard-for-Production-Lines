@@ -2,6 +2,7 @@ export type MaintenanceStatus = 'Terminé' | 'Ce mois' | 'Bientôt';
 export type Periodicity = 'Mensuelle' | 'Trimestrielle' | 'Semestrielle' | 'Annuelle';
 
 export interface MaintenanceTracking { machine: string; annualDate: string; status: MaintenanceStatus; }
+export interface AnnualPlanRow { machine: string; colors: string[]; }
 export interface PreventiveAction { code: string; description: string; periodicity: Periodicity; }
 export interface CorrectiveAction { code: string; description: string; documented: boolean; }
 export interface KpiRow { machine: string; failures: number; downtimeHours: number; theoreticalHours: number; operatingHours: number; mttrHours: number; mtbfHours: number; availability: number; }
@@ -15,6 +16,7 @@ export interface CountItem { label: string; value: number; }
 
 export interface MaintenanceDataset {
   tracking: MaintenanceTracking[];
+  annualPlan: AnnualPlanRow[];
   preventiveActions: PreventiveAction[];
   correctiveActions: CorrectiveAction[];
   kpis: KpiRow[];
