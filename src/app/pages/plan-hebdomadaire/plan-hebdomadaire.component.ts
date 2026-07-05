@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MaintenanceDataService } from '../../services/maintenance-data.service';
-import { Periodicity } from '../../models/maintenance.models';
-import { cellPeriodicity } from '../../shared/maintenance.util';
 
 @Component({
   selector: 'app-plan-hebdomadaire',
@@ -44,7 +42,7 @@ import { cellPeriodicity } from '../../shared/maintenance.util';
               <td class="sticky"><strong>{{ row.machine }}</strong></td>
               <td
                 *ngFor="let week of visibleWeeks"
-                [style.background]="codeColor(row.tasks[week.index])"
+                [style.background]="weekColor(week.index)"
                 [title]="weekTitle(week.index, row.tasks[week.index])">
                 <span>{{ row.tasks[week.index] || '—' }}</span>
               </td>
@@ -62,13 +60,7 @@ import { cellPeriodicity } from '../../shared/maintenance.util';
         </table>
       </div>
 
-      <div class="legend" aria-label="Légende des périodicités">
-        <span><i class="monthly"></i>Mensuelle (A1–A7)</span>
-        <span><i class="quarterly"></i>Trimestrielle (A8–A11)</span>
-        <span><i class="semiannual"></i>Semestrielle (A12–A17)</span>
-        <span><i class="annual"></i>Annuelle (A18–A21)</span>
-      </div>
-      <div class="legend status-legend" aria-label="Légende des statuts Excel">
+      <div class="legend" aria-label="Légende des statuts Excel">
         <span><i class="completed"></i>Semaine réalisée (1)</span>
         <span><i class="pending"></i>Semaine non réalisée (0)</span>
         <span><i class="leave"></i>Congé</span>
@@ -86,24 +78,13 @@ import { cellPeriodicity } from '../../shared/maintenance.util';
     .legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: .9rem; font-size: .7rem; color: #64756a; }
     .legend span { display: flex; align-items: center; gap: .35rem; }
     .legend i { width: 12px; height: 12px; border: 1px solid #54635a; border-radius: 2px; }
-    .legend .monthly { background: #dfe4ea; }
-    .legend .quarterly { background: #ffe3ad; }
-    .legend .semiannual { background: #c7f1d5; }
-    .legend .annual { background: #ffcaca; }
-    .legend .completed { background: #00b050; }
-    .legend .pending { background: #ff0000; }
-    .legend .leave { background: #ffff00; }
-    .status-legend { margin-top: .45rem; }
+    .legend .completed { background: #c7f1d5; }
+    .legend .pending { background: #ffcaca; }
+    .legend .leave { background: #ffe3ad; }
   `]
 })
 export class PlanHebdomadaireComponent {
   readonly data = inject(MaintenanceDataService);
-  private readonly codeColors: Record<Periodicity, string> = {
-    Mensuelle: '#dfe4ea',
-    Trimestrielle: '#ffe3ad',
-    Semestrielle: '#c7f1d5',
-    Annuelle: '#ffcaca'
-  };
   query = '';
   quarter = 'all';
 
@@ -120,15 +101,10 @@ export class PlanHebdomadaireComponent {
 
   weekColor(index: number): string {
     const status = this.data.weeklyStatus[index];
-    if (this.isLeave(status)) return '#ffff00';
-    if (Number(status) === 1) return '#00b050';
-    if (Number(status) === 0) return '#ff0000';
-    return '#ffffff';
-  }
-
-  codeColor(tasks: string | null): string {
-    const periodicity = cellPeriodicity(tasks);
-    return periodicity ? this.codeColors[periodicity] : '#ffffff';
+    if (this.isLeave(status)) return '#ffe3ad';
+    if (Number(status) === 1) return '#c7f1d5';
+    if (Number(status) === 0) return '#ffcaca';
+    return '#dfe4ea';
   }
 
   statusLabel(index: number): string {
