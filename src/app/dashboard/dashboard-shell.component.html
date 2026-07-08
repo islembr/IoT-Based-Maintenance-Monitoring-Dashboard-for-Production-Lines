@@ -1,0 +1,14 @@
+<div class="app-shell">
+  <aside class="sidebar" [class.open]="menuOpen">
+    <div class="brand"><span class="brand-mark">MM</span><div><strong>Maintenance Monitoring</strong><small>Dashboard · Lecture seule</small></div></div>
+    <nav>
+      <a *ngFor="let link of links" class="nav-item" [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: !!link.exact }" (click)="closeMenu()"><span>{{ link.icon }}</span>{{ link.label }}</a>
+    </nav>
+    <a class="admin-link" routerLink="/admin"><span>⚙</span>Admin area</a>
+    <button class="refresh-button" (click)="refresh()" [disabled]="data.loading"><span [class.spinning]="data.loading">↻</span>{{ data.loading ? 'Actualisation…' : 'Actualiser Excel' }}</button>
+    <div class="api-error" *ngIf="data.error">{{ data.error }}</div>
+    <div class="source-note"><span></span><div>{{ data.workbookName || 'Classeur Excel' }}<small *ngIf="data.lastUpdated">Mis à jour {{ data.lastUpdated | date:'dd/MM/yyyy HH:mm' }}</small></div></div>
+  </aside>
+  <header class="mobile-header"><button (click)="menuOpen = !menuOpen" aria-label="Ouvrir le menu">☰</button><strong>Maintenance Monitoring</strong><button class="mobile-refresh" (click)="refresh()" [disabled]="data.loading" aria-label="Actualiser Excel">↻</button></header>
+  <main class="content"><router-outlet /></main>
+</div>
