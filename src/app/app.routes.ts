@@ -21,7 +21,12 @@ export const APP_ROUTES: Routes = [
     ]
   },
   {
+    path: 'admin/login',
+    loadComponent: () => import('./admin/pages/admin-login.component').then(component => component.AdminLoginComponent)
+  },
+  {
     path: 'admin',
+    canActivate: [adminGuard],
     canActivateChild: [adminGuard],
     loadComponent: () => import('./admin/admin-shell.component').then(component => component.AdminShellComponent),
     children: [
@@ -29,7 +34,6 @@ export const APP_ROUTES: Routes = [
       { path: 'interventions', loadComponent: () => import('./admin/pages/admin-intervention.component').then(component => component.AdminInterventionComponent) },
       { path: 'maintenance-status', loadComponent: () => import('./admin/pages/admin-maintenance-status.component').then(component => component.AdminMaintenanceStatusComponent) },
       { path: 'spare-parts', loadComponent: () => import('./admin/pages/admin-spare-parts.component').then(component => component.AdminSparePartsComponent) },
-      { path: 'excel', loadComponent: () => import('./admin/pages/admin-excel.component').then(component => component.AdminExcelComponent) },
       { path: 'planner', loadComponent: () => import('./admin/pages/admin-planner.component').then(component => component.AdminPlannerComponent) }
     ]
   },

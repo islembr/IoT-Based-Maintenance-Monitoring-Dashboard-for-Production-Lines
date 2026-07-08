@@ -1,4 +1,13 @@
-import { CanActivateChildFn } from '@angular/router';
+import { inject } from '@angular/core';
+import { CanActivateChildFn, CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
-// Placeholder boundary for future authentication. Admin stays accessible until login is implemented.
-export const adminGuard: CanActivateChildFn = () => true;
+const checkAdminAccess = (url: string) => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  return auth.isAuthenticated()
+    ? true
+    : router.createUrlTree(['/admin/login'], { queryParams: { returnUrl: url } });
+};
+
+export const adminGuard: CanActivateFn & CanActivateChildFn = (_route, state) => checkAdminAccess(state.url);

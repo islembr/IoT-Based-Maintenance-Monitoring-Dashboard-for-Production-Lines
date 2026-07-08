@@ -5,5 +5,4 @@ export interface InterventionInput { machine: string; code: string; description:
 export interface MaintenanceStatusInput { machine: string; annualDate: string; status: MaintenanceStatus; }
 export interface SparePartInput { name: string; reference: string; quantity: number; replacementDate: string | null; }
 export interface PlannerProjectInput { equipmentName: string; priority: number; projectCode: string; baNumber: string; status: PlannerStatus; currentPhase: PlannerPhaseCode; startYear: number; startWeek: number; endYear: number; endWeek: number; }
-export interface WorkbookUploadInput { file: File; replaceCurrent: boolean; }
 export interface AdminOperationResult { success: boolean; message: string; mock: boolean; }

@@ -9,8 +9,7 @@ import { RouterLink } from '@angular/router';
       <a routerLink="/admin/interventions"><b>01</b><h2>Add intervention</h2><p>Prepare corrective intervention records and durations.</p></a>
       <a routerLink="/admin/maintenance-status"><b>02</b><h2>Maintenance status</h2><p>Update annual dates and completion states.</p></a>
       <a routerLink="/admin/spare-parts"><b>03</b><h2>Spare parts</h2><p>Prepare quantity and replacement-date changes.</p></a>
-      <a routerLink="/admin/excel"><b>04</b><h2>Excel management</h2><p>Validate or replace source workbooks later.</p></a>
-      <a routerLink="/admin/planner"><b>05</b><h2>Project planner</h2><p>Prepare assembly timeline phases and priorities.</p></a>
+      <a routerLink="/admin/planner"><b>04</b><h2>Project planner</h2><p>Prepare assembly timeline phases and priorities.</p></a>
     </section>
   `,
   styles: [`
