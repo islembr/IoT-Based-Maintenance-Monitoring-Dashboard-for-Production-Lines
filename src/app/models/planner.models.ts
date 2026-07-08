@@ -32,3 +32,10 @@ export interface PlannerWeek {
   week: number;
   label: string;
 }
+
+export interface PlannerMonth {
+  name: string;
+  year: number;
+  startIndex: number;
+  weekSpan: number;
+}

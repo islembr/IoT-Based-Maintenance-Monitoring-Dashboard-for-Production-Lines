@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PlannerPhase, PlannerPhaseCode, PlannerProject } from '../../models/planner.models';
+import { PlannerMonth, PlannerPhase, PlannerPhaseCode, PlannerProject } from '../../models/planner.models';
 import { PlannerDataService } from '../../services/planner-data.service';
 
 const PHASE_LABELS: Record<PlannerPhaseCode, string> = {
@@ -63,6 +63,14 @@ const PHASE_LABELS: Record<PlannerPhaseCode, string> = {
           <div class="gantt-header timeline-head">
             <div class="year-row">
               <span *ngFor="let year of data.years">{{ year }}</span>
+            </div>
+            <div class="month-row" style="display:grid;grid-template-columns:repeat(104,30px);height:25px">
+              <span
+                *ngFor="let month of data.months"
+                [style.grid-column]="monthGridColumn(month)"
+                style="display:grid;place-items:center;border-left:1px solid #cbd8ce;border-top:1px solid #dce5de;font-size:.58rem;text-transform:none">
+                {{ month.name }}
+              </span>
             </div>
             <div class="week-row">
               <span *ngFor="let week of data.weeks" [class.year-start]="week.week === 1">{{ week.week }}</span>
@@ -177,6 +185,10 @@ export class ProjectPlannerComponent {
 
   gridColumn(phase: PlannerPhase): string {
     return `${phase.startIndex + 1} / ${phase.endIndex + 2}`;
+  }
+
+  monthGridColumn(month: PlannerMonth): string {
+    return `${month.startIndex + 1} / span ${month.weekSpan}`;
   }
 
   phaseTitle(phase: PlannerPhase): string {

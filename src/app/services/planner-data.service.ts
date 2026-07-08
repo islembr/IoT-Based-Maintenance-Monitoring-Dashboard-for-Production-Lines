@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PLANNER_PROJECTS } from '../data/planner.data';
-import { PlannerCurrentPhase, PlannerPhaseCode, PlannerProject, PlannerProjectSource, PlannerWeek } from '../models/planner.models';
+import { PlannerCurrentPhase, PlannerMonth, PlannerPhaseCode, PlannerProject, PlannerProjectSource, PlannerWeek } from '../models/planner.models';
 
 const PHASE_SEQUENCE: PlannerPhaseCode[] = ['BA', 'BG', 'LZ', 'TR', 'VA', 'IA', 'VB'];
 
@@ -16,6 +16,16 @@ export class PlannerDataService {
       label: `W${weekIndex + 1}`
     }))
   );
+  readonly months: PlannerMonth[] = this.years.flatMap(year => {
+    const names = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+    const spans = [4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 4, 5];
+    let offset = (year - 2026) * 52;
+    return names.map((name, index) => {
+      const month = { name, year, startIndex: offset, weekSpan: spans[index] };
+      offset += spans[index];
+      return month;
+    });
+  });
   readonly projects: PlannerProject[] = PLANNER_PROJECTS.map(project => this.withCalculatedState(project));
 
   private withCalculatedState(project: PlannerProjectSource): PlannerProject {
